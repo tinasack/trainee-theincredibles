@@ -1,10 +1,8 @@
 package com.accenture.incredibles.instrument.models;
 
-import com.accenture.incredibles.instrument.models.Instrument;
-
 import java.util.ArrayList;
 
-public class Object {
+public class NewInstrument {
     String name;
     String art;
     public void konzertGitarre(ArrayList<Instrument> instrumentList) {
