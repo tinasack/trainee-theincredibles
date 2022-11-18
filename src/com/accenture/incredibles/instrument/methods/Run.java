@@ -35,7 +35,8 @@ public class Run {
         boolean run = true;
         while (run) {
             System.out.print(">>>");
-            String input = scanner.nextLine();
+            String answer = scanner.nextLine();
+            String input = answer.toLowerCase();
             if (input.equals("add")) {
                 addCommando.execute(instrumentList, scanner);
             } else if (input.equals("exit")) {
