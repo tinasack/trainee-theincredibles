@@ -4,8 +4,16 @@ import com.accenture.incredibles.instrument.models.Instrument;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AddCommando {
-    public void execute(ArrayList<Instrument> instrumentList, Scanner scanner) {
+public class AddCommando implements Commando {
+
+    private ArrayList<Instrument> instruments;
+    private Scanner scanner;
+
+    public AddCommando(ArrayList<Instrument> instruments, Scanner scanner) {
+        this.instruments = instruments;
+        this.scanner = scanner;
+    }
+    public boolean execute() {
         System.out.println("Which instrument do you want to add?");
         System.out.print(">>>");
         String name = scanner.nextLine();
@@ -14,8 +22,13 @@ public class AddCommando {
         String art = scanner.nextLine();
 
         Instrument instrument = new Instrument(name, art);
-        instrumentList.add(instrument);
+        instruments.add(instrument);
 
         System.out.println("Instrument saved!");
+        return true;
+    }
+
+    public boolean run(String command) {
+        return  "add".equals(command);
     }
 }

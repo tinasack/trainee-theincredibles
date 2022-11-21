@@ -1,9 +1,6 @@
 package com.accenture.incredibles.instrument.methods;
 
-import com.accenture.incredibles.instrument.commandos.AddCommando;
-import com.accenture.incredibles.instrument.commandos.RemoveCommando;
-import com.accenture.incredibles.instrument.commandos.ShowCommando;
-import com.accenture.incredibles.instrument.commandos.ExitCommando;
+import com.accenture.incredibles.instrument.commandos.*;
 import com.accenture.incredibles.instrument.models.Instrument;
 import com.accenture.incredibles.instrument.models.NewInstrument;
 
@@ -12,21 +9,13 @@ import java.util.Scanner;
 
 public class Run {
     public void run() {
-        ArrayList<Instrument> instrumentList = new ArrayList<>();
+        ArrayList<Instrument> instruments = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-
-        AddCommando addCommando = new AddCommando();
-        ShowCommando showCommando = new ShowCommando();
-        ExitCommando exitCommando = new ExitCommando();
-        RemoveCommando removeCommando = new RemoveCommando();
+        CreateCommandoList commandoList = new CreateCommandoList();
         Error error = new Error();
-
-        NewInstrument newInstrument = new NewInstrument();
-        newInstrument.klavier(instrumentList);
-        newInstrument.ukulele(instrumentList);
-        newInstrument.ocarina(instrumentList);
-        newInstrument.konzertGitarre(instrumentList);
-        newInstrument.westernGitarre(instrumentList);
+        CreateInstruments createInstruments = new CreateInstruments();
+        createInstruments.execute(instruments);
+        ArrayList<Commando> commandos = commandoList.createCommandoList(instruments, scanner);
 
         System.out.println("Hi, welcome to your instrument list!");
         System.out.println("Please type 'show' to show your current list, 'add' to add instrument," +
@@ -37,15 +26,17 @@ public class Run {
             System.out.print(">>>");
             String answer = scanner.nextLine();
             String input = answer.toLowerCase();
-            if (input.equals("add")) {
-                addCommando.execute(instrumentList, scanner);
-            } else if (input.equals("exit")) {
-                run = exitCommando.execute();
-            } else if (input.equals("show")) {
-                showCommando.execute(instrumentList);
-            } else if (input.equals("remove")) {
-                removeCommando.execute(instrumentList, scanner);
-            } else {
+
+            boolean found = false;
+            for (Commando commando : commandos) {
+                if (commando.run(input)) {
+                    run = commando.execute();
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
                 error.error();
             }
         }
