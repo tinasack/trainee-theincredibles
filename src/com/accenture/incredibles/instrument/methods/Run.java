@@ -2,25 +2,25 @@ package com.accenture.incredibles.instrument.methods;
 
 import com.accenture.incredibles.instrument.commandos.*;
 import com.accenture.incredibles.instrument.models.Instrument;
-import com.accenture.incredibles.instrument.models.NewInstrument;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Run {
-    public void run() {
+    public void execute() {
+        // create list of instruments and fill with existing data
         ArrayList<Instrument> instruments = new ArrayList<>();
-        Scanner scanner = new Scanner(System.in);
-        CreateCommandoList commandoList = new CreateCommandoList();
-        Error error = new Error();
         CreateInstruments createInstruments = new CreateInstruments();
         createInstruments.execute(instruments);
+        // create scanner
+        Scanner scanner = new Scanner(System.in);
+        // create list of commandos and fill with existing commandos
+        CreateCommandoList commandoList = new CreateCommandoList();
         ArrayList<Commando> commandos = commandoList.createCommandoList(instruments, scanner);
+        // create errormessage
+        Error error = new Error();
 
-        System.out.println("Hi, welcome to your instrument list!");
-        System.out.println("Please type 'show' to show your current list, 'add' to add instrument," +
-                " 'remove' to remove instrument from list and 'exit' if you want to leave!");
-
+        // logic to run app
         boolean run = true;
         while (run) {
             System.out.print(">>>");
