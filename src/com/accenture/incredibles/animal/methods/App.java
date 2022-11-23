@@ -17,7 +17,8 @@ public class App {
         CreateCommandList commandList = new CreateCommandList();
         List<Command> commands = commandList.createCommandList(animals, getInput.scanner);
 
-        while (true) {
+        boolean run = true;
+        while (run) {
             System.out.println("What do you want to do?");
 
             String input = getInput.execute();
@@ -26,7 +27,7 @@ public class App {
             for (Command command : commands) {
                 if (command.shouldExecute(input)) {
                     commandFound = true;
-                    command.execute();
+                    run = command.execute();
                     break;
                 }
             }
